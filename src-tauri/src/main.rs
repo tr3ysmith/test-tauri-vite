@@ -11,7 +11,11 @@ fn greet(name: &str) -> String {
 
 #[tauri::command]
 fn open<R: Runtime>(app: AppHandle<R>) {
-    let _ = WindowBuilder::new(&app, "new_window", tauri::WindowUrl::App("/index".into())).build().unwrap();
+    std::thread::spawn(move || {
+        let _ = WindowBuilder::new(&app, "new_window", tauri::WindowUrl::App("/index".into()))
+            .build()
+            .unwrap();
+    });
 }
 
 fn main() {
